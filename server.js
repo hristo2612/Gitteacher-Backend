@@ -19,6 +19,7 @@ const mongoDevUrl = 'mongodb://localhost/gittus';
 
 const app = express();
 
+// Use cool stuff
 app.use(cors());
 app.use(morgan('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -35,17 +36,21 @@ if (isProduction) {
 
 app.use(session({ store: new connectMongo({ mongooseConnection: mongoose.connection }), secret: 'gittus', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
-app.get('/', (req, res) => {
-  res.send('Hi');
-});
+require('./models/User');
 
+app.use(require('./routes'));
+
+// Set to 404 and forward to ERR handler ( if no routes match )
 app.use((req, res, next) => {
   let err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
+
 if (!isProduction) {
+  // Development ERR handler
+  // with stack trace
   app.use((err, req, res, next) => {
     console.log(err.stack);
 
@@ -60,6 +65,7 @@ if (!isProduction) {
   });
 }
 
+// Production ERR handler with no stack trace
 app.use((err, req, res, next) => {
   res.status(err.status || 500);
   res.json({

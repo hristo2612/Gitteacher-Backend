@@ -27,7 +27,7 @@
     "underscore": "^1.9.1"
   },
   "scripts": {
-    "start": "nodemon ./serve"
+    "start": "nodemon ./server"
   },
   "devDependencies": {
     "cross-env": "^5.2.0"

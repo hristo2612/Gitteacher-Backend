@@ -1,0 +1,87 @@
+{
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/640px-React-icon.svg.png",
+    "heading": "Implementing Routing with React and Redux",
+    "subHeading": "SOme nice description here about routing with react and redux!",
+    "author": "Hristo Bogoeb",
+    "upToDate": {
+        "status": true,
+        "lastUpdate": "25-01-2020"
+    },
+    "tags": [
+        "React",
+        "Redux",
+        "Routing"
+    ],
+    "videoUrl": "https://www.youtube.com/watch?v=5Knp04GZAj8",
+    "githubRepoUrl": "https://github.com/hristo2612/tutorialize-github/",
+    "mainSteps": [
+        {
+            "stepName": "Initial Step",
+            "subSteps": [
+                {
+                    "info": "React blah blah Redux blah blah Routing blah some begining phase small intro to what we're talkin bout"
+                },
+                {
+                    "heading": "What this tutorial will NOT cover",
+                    "info": "This tutorial will not cover this and that..",
+                    "list": [
+                        "Fundamental understanding of how Routing works",
+                        "How to be a pro",
+                        "How to press buttons on the keyboard",
+                        "HOw to act like you know it"
+                    ]
+                },
+                {
+                    "heading": "What you'll need to know before proceeding",
+                    "info": "Here is a nice lil list of the thing you'll need to know before continuing",
+                    "checkList": [
+                        {
+                            "title": "Basic understanding of JS",
+                            "description": "You can go look up MDN for the true JavaScript learning experience ( orr WWWSchools )",
+                            "checked": true
+                        },
+                        {
+                            "title": "Basic understanding of React",
+                            "description": "Check out React tuts from official react website",
+                            "checked": true
+                        },
+                        {
+                            "title": "Understanding of Redux",
+                            "description": "Go to official Redux site and list through their steps",
+                            "checked": false
+                        }
+                    ]
+                },
+                {
+                    "heading": "It's time to initialize our project with create-react-app",
+                    "info": "Open up a terminal and type create-react-app MyRoutingApp",
+                    "codeFiles": [
+                        {
+                            "fileName": "index.js",
+                            "filePath": "MyApp/",
+                            "code": [
+                                "+var good = 'good';",
+                                "+var verygood = 'verygood'"
+                            ]
+                        },
+                        {
+                            "fileName": "favicon.ico",
+                            "filePath": "MyApp/public/",
+                            "code": false
+                        }
+                    ]
+                }
+            ]
+
+        },
+        {
+            "stepName": "Setting up the example",
+            "subSteps": [
+                {
+                    "info": " Rout bout"
+                }
+            ]
+
+        }
+    ]
+}

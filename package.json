@@ -1,0 +1,16 @@
+{
+  "name": "tutorialize-github",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/hristo2612/tutorialize-github",
+  "author": "hristo2612 <hristoapps@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.3",
+    "git-promise": "^0.3.1",
+    "nodegit": "^0.22.2"
+  },
+  "scripts": {
+    "start": "nodemon ./serve"
+  }
+}

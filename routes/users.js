@@ -45,14 +45,45 @@ router.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
-router.post('/user', auth.optional, (req, res, next) => {
-    User.findOne({ email: req.body.user.email }, (err, one) => {
-        res.json({ one: one });
-    })
+router.post('/user', auth.required, (req, res, next) => {
+    User.findById(req.payload.id).then((user) => {
+        if (!user) {
+            res.sendStatus(401);
+        }
+        return res.json({ user: user.authJSON() });
+    }).catch(next);
 });
 
-router.put('/user', auth.optional, (req, res, next) => {
-    res.send('Get user muser');
+router.put('/user', auth.required, (req, res, next) => {
+    User.findById(req.payload.id).then((user) => {
+        if (!user) {
+            res.sendStatus(401);
+        }
+
+        if (typeof req.body.user.username !== 'undefined') {
+            user.username = req.body.user.username;
+        }
+
+        if (typeof req.body.user.email !== 'undefined') {
+            user.email = req.body.user.email;
+        }
+
+        if (typeof req.body.user.bio !== 'undefined') {
+            user.bio = req.body.user.bio;
+        }
+
+        if (typeof req.body.user.image !== 'undefined') {
+            user.image = req.body.user.image;
+        }
+
+        if (typeof req.body.user.password !== 'undefined') {
+            user.hashPassword(req.body.user.password);
+        }
+
+        return user.save().then(() => {
+            return res.json({ user: user.authJSON() });
+        });
+    }).catch(next);
 });
 
 module.exports = router;

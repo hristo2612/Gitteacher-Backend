@@ -37,6 +37,7 @@ if (isProduction) {
 app.use(session({ store: new connectMongo({ mongooseConnection: mongoose.connection }), secret: 'gittus', cookie: { maxAge: 60000 }, resave: false, saveUninitialized: false }));
 
 require('./models/User');
+require('./config/passport');
 
 app.use(require('./routes'));
 

@@ -1,7 +1,7 @@
 {
   "name": "tutorialize-github",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://github.com/hristo2612/tutorialize-github",
   "author": "hristo2612 <hristoapps@gmail.com>",
   "license": "MIT",
@@ -27,7 +27,8 @@
     "underscore": "^1.9.1"
   },
   "scripts": {
-    "start": "nodemon ./server"
+    "start": "node ./server",
+    "dev": "nodemon ./server"
   },
   "devDependencies": {
     "cross-env": "^5.2.0"

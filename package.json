@@ -1,10 +1,13 @@
 {
   "name": "tutorialize-github",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "server.js",
   "repository": "https://github.com/hristo2612/tutorialize-github",
   "author": "hristo2612 <hristoapps@gmail.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=8.11.2"
+  },
   "dependencies": {
     "body-parser": "^1.18.3",
     "connect-mongo": "^2.0.1",

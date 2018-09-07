@@ -1,3 +1,3 @@
 module.exports = {
-    secret: process.env.NODE_ENV === 'production' ? process.env.SECRET : 'gituss'
+    secret: process.env.NODE_ENV === 'production' ? 'gittus' : 'gittus'
 };

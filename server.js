@@ -11,26 +11,43 @@ const errorhandler = require('errorhandler');
 const connectMongo = require('connect-mongo')(session);
 const morgan = require('morgan');
 const methodOverride = require('method-override');
+const nconf = require('nconf');
 
+nconf.argv().env().file('dbConfig.json');
+const {
+  dbUser,
+  dbPass,
+  dbHost,
+  dbPort,
+  dbDatabase,
+  dbSSL,
+  dbReplicaSet,
+  dbAuthSource,
+  dbClusterShards
+} = nconf.get();
 const isProduction = process.env.NODE_ENV === 'production';
 
-const mongoProdUrl = process.env.MONGODB_URI + '/gittus';
-const mongoDevUrl = 'mongodb://localhost/gittus';
+const devURI = 'mongodb://localhost:27017/giteacher';
+const prodURI = `mongodb://${dbUser}:${dbPass}@${dbClusterShards.join(':' + dbPort + ',')}/${dbDatabase}?ssl=${dbSSL}&replicaSet=${dbReplicaSet}&authSource=${dbAuthSource}`;
 
 const app = express();
 
 // Use cool stuff
 app.use(cors());
-app.use(morgan('dev'));
+if (isProduction) {
+  app.use(morgan('combined'));
+} else {
+  app.use(morgan('dev'));
+}
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(methodOverride());
 app.use(express.static(path.resolve(__dirname, '/public')));
 
 if (isProduction) {
-  mongoose.connect(mongoProdUrl, { useNewUrlParser: true });
+  mongoose.connect(prodURI, { useNewUrlParser: true });
 } else {
-  mongoose.connect(mongoDevUrl, { useNewUrlParser: true });
+  mongoose.connect(devURI, { useNewUrlParser: true });
   mongoose.set('debug', true);
 }
 
@@ -38,7 +55,7 @@ app.use(session({ store: new connectMongo({ mongooseConnection: mongoose.connect
 
 require('./models/User');
 require('./models/Tutorial');
-require('./models/Step'); 
+require('./models/Step');
 require('./config/passport');
 
 app.use(require('./routes'));

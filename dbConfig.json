@@ -1,0 +1,16 @@
+{
+    "dbHost": "git-teacher-cluster-km0mz.mongodb.net",
+    "dbPort": "27017",
+    "dbDatabase": "giteacher",
+    "dbUser": "hristo",
+    "dbPass": "IckoPicko",
+    "dbClusterShards": [
+        "git-teacher-cluster-shard-00-00-km0mz.mongodb.net",
+        "git-teacher-cluster-shard-00-01-km0mz.mongodb.net",
+        "git-teacher-cluster-shard-00-02-km0mz.mongodb.net"
+    ],
+    "dbSSL": true,
+    "dbReplicaSet": "git-teacher-cluster-shard-0",
+    "dbAuthSource": "admin"
+
+}

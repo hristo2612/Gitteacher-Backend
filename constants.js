@@ -1,5 +1,5 @@
-const path = require('path');
+const path = require("path");
 
 module.exports = {
-    projectRoot: path.dirname(require.main.filename)
-}
+  projectRoot: path.dirname(require.main.filename)
+};

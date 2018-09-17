@@ -2,19 +2,39 @@ const mongoose = require("mongoose");
 const mongooseUniqueValidator = require("mongoose-unique-validator");
 const slugify = require("slugify");
 let User = mongoose.model("User");
+const isGithubUrl = /^(?:http(?:s)?:\/\/)?(?:[^\.]+\.)?github\.com(\/.*)?$/;
 
 let TutorialSchema = new mongoose.Schema(
   {
-    slug: { type: String, lowercase: true, unique: true },
+    slug: {
+      type: String,
+      lowercase: true,
+      unique: true,
+      required: [true, "Can't be blank.."],
+      index: true
+    },
     imageUrl: String,
-    heading: String,
-    subHeading: String,
-    author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    heading: {
+      type: String,
+      required: [true, "Heading can't be blank.."],
+      minlength: 4,
+      maxlength: 99
+    },
+    subHeading: {
+      type: String,
+      required: [true, "Sub Heading can't be blank.."],
+      minlength: 4,
+      maxlength: 99
+    },
+    // author: {
+    //   type: mongoose.Schema.Types.ObjectId,
+    //   ref: "User"
+    // },
     upToDate: String,
     tags: [{ type: String }],
     videoUrl: String,
-    githubRepoUrl: String,
-    mainSteps: [{ type: mongoose.Schema.Types.ObjectId, ref: "Step" }]
+    githubRepoUrl: String
+    //mainSteps: [{ type: mongoose.Schema.Types.ObjectId, ref: "Step" }]
   },
   { timestamps: true }
 );
@@ -28,6 +48,9 @@ TutorialSchema.methods.slugify = function() {
 TutorialSchema.pre("validate", function(next) {
   if (!this.slug) {
     this.slugify();
+  }
+  if (!isGithubUrl.test(this.githubRepoUrl)) {
+    next(["Please state a valid github repository"]);
   }
   next();
 });
@@ -46,3 +69,6 @@ TutorialSchema.methods.tutorialJSON = function() {
     mainSteps: this.mainSteps
   };
 };
+
+mongoose.set("useCreateIndex", true);
+mongoose.model("Tutorial", TutorialSchema);

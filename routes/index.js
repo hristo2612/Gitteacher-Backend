@@ -9,4 +9,6 @@ router.use("/users", require("./users"));
 
 router.use("/profiles", require("./profiles"));
 
+router.use("/tutorials", require("./tutorials"));
+
 module.exports = router;

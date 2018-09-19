@@ -18,8 +18,8 @@ router.param("username", (req, res, next, username) => {
 });
 
 router.get("/:username", auth.optional, (req, res, next) => {
-  if (req.payload) {
-    User.findById(req.payload.id).then(user => {
+  if (req.auth) {
+    User.findById(req.auth.id).then(user => {
       if (!user) {
         return res.json({ profile: req.profile.profileJSON(false) });
       }

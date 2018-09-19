@@ -51,7 +51,7 @@ router.post("/login", (req, res, next) => {
 });
 
 router.get("/user", auth.required, (req, res, next) => {
-  User.findById(req.payload.id)
+  User.findById(req.auth.id)
     .then(user => {
       if (!user) {
         res.sendStatus(401);
@@ -62,7 +62,7 @@ router.get("/user", auth.required, (req, res, next) => {
 });
 
 router.put("/user", auth.required, (req, res, next) => {
-  User.findById(req.payload.id)
+  User.findById(req.auth.id)
     .then(user => {
       if (!user) {
         res.sendStatus(401);

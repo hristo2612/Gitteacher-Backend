@@ -36,7 +36,7 @@ router.get("/", auth.optional, function(req, res, next) {
           .populate("author")
           .exec(),
         Tutorial.count(query).exec(), // [1]
-        req.payload ? User.findById(req.payload.id) : null // [2]
+        req.auth ? User.findById(req.auth.id) : null // [2]
       ]).then(function(results) {
         var tutorials = results[0];
         var tutorialsCount = results[1];
@@ -54,7 +54,7 @@ router.get("/", auth.optional, function(req, res, next) {
 });
 
 router.post("/", auth.optional, function(req, res, next) {
-    User.findById(req.payload.id).then(function(user) {
+    User.findById(req.auth.id).then(function(user) {
         var tutorial = new Tutorial(req.body.tutorial);
   
         return tutorial.save().then(function(){

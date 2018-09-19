@@ -54,16 +54,13 @@ router.get("/", auth.optional, function(req, res, next) {
 });
 
 router.post("/", auth.optional, function(req, res, next) {
-  //User.findById(req.payload.id).then(function(user) {
-
-  var tutorial = new Tutorial(req.body.tutorial);
-
-  return tutorial
-    .save()
-    .then(function() {
-      return res.json({ tutorial: tutorial.tutorialJSON() });
-    })
-    .catch(next);
+    User.findById(req.payload.id).then(function(user) {
+        var tutorial = new Tutorial(req.body.tutorial);
+  
+        return tutorial.save().then(function(){
+            return res.json({tutorial: tutorial.tutorialJSON()});            
+        });
+    }).catch(next);
 });
 
 module.exports = router;

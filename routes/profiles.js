@@ -7,7 +7,7 @@ router.param("username", (req, res, next, username) => {
   User.findOne({ username: username })
     .then(user => {
       if (!user) {
-        res.sendStatus(404); 
+        res.sendStatus(404);
       }
 
       req.profile = user;

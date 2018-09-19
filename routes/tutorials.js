@@ -4,63 +4,66 @@ const auth = require("./auth");
 let User = mongoose.model("User");
 let Tutorial = mongoose.model("Tutorial");
 
-router.get('/', auth.optional, function(req, res, next) {
+router.get("/", auth.optional, function(req, res, next) {
   var query = {};
   var limit = 10;
   var offset = 0;
 
-  if (typeof req.query.limit  !== 'undefined') {
-      limit = req.query.limit;
+  if (typeof req.query.limit !== "undefined") {
+    limit = req.query.limit;
   }
 
-  if (typeof req.query.offset !== 'undefined') {
-      offset = req.query.offset;
+  if (typeof req.query.offset !== "undefined") {
+    offset = req.query.offset;
   }
 
   if (req.query.author) {
-    User.findOne({})
+    User.findOne({});
   }
   Promise.all([
-    req.query.author ? User.findOne({username: req.query.author}) : null,
+    req.query.author ? User.findOne({ username: req.query.author }) : null
   ])
-  .then(function(author){
-
+    .then(function(author) {
       if (author) {
-          query.author = author._id;
+        query.author = author._id;
       }
 
       return Promise.all([
-          Tutorial.find(query) // [0]
-              .limit(Number(limit))
-              .skip(Number(offset))
-              .sort({createdAt: 'desc'})
-              .populate('author')
-              .exec(),
-          Tutorial.count(query).exec(), // [1]
-          req.payload ? User.findById(req.payload.id) : null // [2]
-      ]).then(function(results){
-          var tutorials = results[0];
-          var tutorialsCount = results[1];
-          var user = results[2];
-  
-          return res.json({
-              tutorials: tutorials.map(function(tutorial){
-                  return tutorial.tutorialJSON(user);
-              }),
-              tutorialsCount: tutorialsCount
-          });
+        Tutorial.find(query) // [0]
+          .limit(Number(limit))
+          .skip(Number(offset))
+          .sort({ createdAt: "desc" })
+          .populate("author")
+          .exec(),
+        Tutorial.count(query).exec(), // [1]
+        req.payload ? User.findById(req.payload.id) : null // [2]
+      ]).then(function(results) {
+        var tutorials = results[0];
+        var tutorialsCount = results[1];
+        var user = results[2];
+
+        return res.json({
+          tutorials: tutorials.map(function(tutorial) {
+            return tutorial.tutorialJSON(user);
+          }),
+          tutorialsCount: tutorialsCount
+        });
       });
-  }).catch(next);
+    })
+    .catch(next);
 });
 
-router.post('/', auth.optional, function(req, res, next) {
+router.post("/", auth.optional, function(req, res, next) {
   //User.findById(req.payload.id).then(function(user) {
 
-      var tutorial = new Tutorial(req.body.tutorial);
+  var tutorial = new Tutorial(req.body.tutorial);
 
-      return tutorial.save().then(function(){
-          return res.json({tutorial: tutorial.tutorialJSON()});            
-      }).catch(next);
+  return tutorial
+    .save()
+    .then(function() {
+      return res.json({ tutorial: tutorial.tutorialJSON() });
+    })
+    .catch(next);
 });
 
 module.exports = router;

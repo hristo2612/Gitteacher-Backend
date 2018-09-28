@@ -10,7 +10,7 @@ passport.use(
       passwordField: "user[password]"
     },
     (email, password, done) => {
-      User.findOne({ email: email })
+      User.findOne({ $or: [ { email: email }, { username: email }] })
         .then(function(user) {
           if (!user || !user.validatePassword(password)) {
             return done(null, false, {

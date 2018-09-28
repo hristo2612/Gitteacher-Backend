@@ -35,7 +35,7 @@ router.get("/", auth.optional, function(req, res, next) {
           .sort({ createdAt: "desc" })
           .populate("author")
           .exec(),
-        Tutorial.count(query).exec(), // [1]
+        Tutorial.countDocuments(query).exec(), // [1]
         req.auth ? User.findById(req.auth.id) : null // [2]
       ]).then(function(results) {
         var tutorials = results[0];
